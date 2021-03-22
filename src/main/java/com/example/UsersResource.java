@@ -1,7 +1,11 @@
 package com.example;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -14,13 +18,17 @@ public class UsersResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> getUsers() {
-        // This data could be retrieved from a database
-        List<User> users = new ArrayList<User>();
-        users.add(new User(0, "John", "Smith"));
-        users.add(new User(1, "Isaac", "Newton"));
-        users.add(new User(0, "Albert", "Einstein"));
+    	PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		Query<User> q = pm.newQuery(User.class);
+		q.setOrdering("surname desc");
+		
+		List<User> users = q.executeList();
 
-        return users;
+		pm.close();
+		
+		return users;
     }
 }
 

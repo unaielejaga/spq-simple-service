@@ -43,6 +43,37 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-core</artifactId>
+			<version>[5.1.6, 5.9)</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-api-jdo</artifactId>
+			<version>[5.1.4, 5.9)</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-rdbms</artifactId>
+			<version>[5.1.6, 5.9)</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>javax.jdo</artifactId>
+			<version>[3.2.0-m8, )</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.23</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>[1.2.17, )</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -72,6 +103,24 @@
 					<mainClass>com.example.Main</mainClass>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>datanucleus-maven-plugin</artifactId>
+				<version>5.0.2</version>
+				<configuration>
+					<log4jConfiguration>${config.files.dir}/log4j.properties</log4jConfiguration>
+					<verbose>true</verbose>
+					<props>${config.files.dir}/datanucleus.properties</props>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -98,10 +147,33 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>datos</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.2.1</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>java</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<mainClass>com.example.util.PrepareData</mainClass>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<properties>
 		<jersey.version>3.0.1</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<config.files.dir>${basedir}/src/main/resources</config.files.dir>
 	</properties>
 </project>

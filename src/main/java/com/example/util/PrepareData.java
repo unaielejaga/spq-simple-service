@@ -16,11 +16,11 @@ public class PrepareData {
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-			User userA = new User(0, "John", "Smith");
+			User userA = new User("John", "Smith");
 			pm.makePersistent(userA);
-			User userB = new User(0, "Albert", "Einstein");
+			User userB = new User("Albert", "Einstein");
 			pm.makePersistent(userB);
-			User userC = new User(0, "Isaac", "Newton");
+			User userC = new User("Isaac", "Newton");
 			pm.makePersistent(userC);
 
 			tx.commit();

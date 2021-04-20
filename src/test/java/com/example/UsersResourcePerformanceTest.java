@@ -3,25 +3,35 @@ package com.example;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.MediaType;
 
+import org.databene.contiperf.PerfTest;
+import org.databene.contiperf.junit.ContiPerfRule;
 import org.glassfish.grizzly.http.server.HttpServer;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 import org.junit.experimental.categories.Category;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
 
 import categories.IntegrationTest;
 
 @Category(IntegrationTest.class)
-public class MyResourceTest {
+public class UsersResourcePerformanceTest {
 
-    private HttpServer server;
-    private WebTarget target;
+    @Rule public ContiPerfRule rule = new ContiPerfRule();
 
-    @Before
-    public void setUp() throws Exception {
+    private static HttpServer server;
+    private static WebTarget target;
+
+    @BeforeClass
+    public static void setUp() throws Exception {
         // start the server
         server = Main.startServer();
         // create the client
@@ -36,8 +46,8 @@ public class MyResourceTest {
         target = c.target(Main.BASE_URI);
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterClass
+    public static void tearDown() throws Exception {
         server.stop();
     }
 
@@ -45,8 +55,10 @@ public class MyResourceTest {
      * Test to see that the message "Got it!" is sent in the response.
      */
     @Test
-    public void testGetIt() {
-        String responseMsg = target.path("myresource").request().get(String.class);
-        assertEquals("Got it!", responseMsg);
+    @PerfTest(invocations = 1000, threads = 40)
+    public void testGetUsersPerformance() {
+        GenericType<List<User>> genericType = new GenericType<List<User>>() {};
+		List<User> users = target.path("users").request(MediaType.APPLICATION_JSON).get(genericType);
+        assertEquals(3, users.size());
     }
 }

@@ -34,6 +34,12 @@ Se pueden introducir datos de prueba en la aplicación utilizando el comando de 
 
     mvn -Pdatos exec:java
 
+**Tests de integración y rendimiento**
+
+Introducidos los datos de prueba se pueden lanzar los tests de integración y rendimiento usando el comando
+
+    mvn verify -Pintegracion
+
 **Inicio del servidor**
 
 El servidor REST de la aplicación se lanza utilizando el comando

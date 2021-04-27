@@ -23,7 +23,10 @@ jobs:
           mvn --batch-mode --update-snapshots exec:java -Pdatos
 
       - name: Build with Maven including integration tests
-        run: mvn --batch-mode --update-snapshots verify -Pintegracion
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn --batch-mode --update-snapshots verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Pintegracion
 
       - uses: codecov/codecov-action@v1
         with:

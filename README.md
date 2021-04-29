@@ -42,7 +42,7 @@ Introducidos los datos de prueba se pueden lanzar los tests de integración y re
 
 **Inicio del servidor**
 
-El servidor REST de la aplicación se lanza utilizando el comando
+El servidor REST de la aplicación se lanza utilizando el comando.
 
     mvn exec:java
 

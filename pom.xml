@@ -251,5 +251,8 @@
 		<jersey.version>3.0.1</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<config.files.dir>${basedir}/src/main/resources</config.files.dir>
+		<sonar.projectKey>unaielejaga_spq-simple-service</sonar.projectKey>
+  		<sonar.organization>unaielejaga</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 </project>

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.main;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;

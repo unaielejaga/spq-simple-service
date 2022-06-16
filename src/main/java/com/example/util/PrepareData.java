@@ -5,7 +5,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-import com.example.User;
+import com.example.jdo.Distribuidor;
 
 public class PrepareData {
 
@@ -16,12 +16,12 @@ public class PrepareData {
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-			User userA = new User("John", "Smith");
-			pm.makePersistent(userA);
-			User userB = new User("Albert", "Einstein");
-			pm.makePersistent(userB);
-			User userC = new User("Isaac", "Newton");
-			pm.makePersistent(userC);
+			Distribuidor distriA = new Distribuidor("eroski", "EROS", "passwd");
+			pm.makePersistent(distriA);
+			Distribuidor distriB = new Distribuidor("mercadona", "MERC", "passwd");
+			pm.makePersistent(distriB);
+			Distribuidor distriC = new Distribuidor("bm", "BM", "passwd");
+			pm.makePersistent(distriC);
 
 			tx.commit();
 		} finally {

@@ -93,7 +93,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     	    
 	    	JWTVerifier verifier = JWT.require(algorithm)
 	    			.withIssuer(decode.getIssuer())
-	    			.acceptExpiresAt(60)
+	    			.acceptExpiresAt(900)
 	    			.build();
 	    	DecodedJWT decodedJWT = verifier.verify(token);
 	    	return decodedJWT.getIssuer();

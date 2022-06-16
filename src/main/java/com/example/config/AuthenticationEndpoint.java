@@ -74,7 +74,7 @@ public class AuthenticationEndpoint {
     private String issueToken(String username) {
     	try {
     	    Algorithm algorithm = Algorithm.HMAC256("secret");
-    	    long expireTime = (new Date().getTime()) + 60000;
+    	    long expireTime = (new Date().getTime()) + 150000;
             Date expireDate = new Date(expireTime);
     	    String token = JWT.create()
     	        .withIssuer(username)
